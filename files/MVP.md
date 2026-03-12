@@ -7,8 +7,16 @@
 
 1. 获取 Git commit
 2. 获取 commit diff
-3. AI 生成日报
-4. CLI 命令调用
+3. **（提交前）** 基于 diff 由 AI 生成 commit message，用户确认后执行 `git commit`
+4. AI 生成日报 / 周报（基于已提交 commit + diff）
+5. CLI 命令调用
+
+**端到端流程（与 README 一致）：**
+
+```
+代码变更 → git diff → AI → commit message → 用户确认 → git commit
+    → git log / git show → 代码变更分析 → AI 总结 → 日报
+```
 
 ---
 
@@ -62,7 +70,25 @@ git diff HEAD~1
 
 ---
 
-### 3 AI 生成日报
+### 3 AI 生成 commit message（提交前）
+
+输入：
+
+```
+git diff（或暂存区 diff）
+```
+
+输出：
+
+```
+建议的 commit message（用户确认后再 git commit）
+```
+
+流程要点：仅在工作区/暂存区有变更时生成 message；**不自动提交**，必须用户确认。
+
+---
+
+### 4 AI 生成日报
 
 输入：
 
@@ -81,7 +107,7 @@ diff
 
 ---
 
-### 4 CLI 使用
+### 5 CLI 使用
 
 示例：
 

@@ -26,6 +26,7 @@ Worklog 会自动读取你的 Git commit 和代码 diff，然后使用 AI 自动
 # 功能特性
 
 * 📦 自动读取 Git commit
+* ✍️ 基于 diff 生成 commit message（确认后提交）
 * 🧠 AI 自动生成日报
 * 📅 支持日报 / 周报
 * 🖥 CLI 命令行使用
@@ -121,10 +122,28 @@ worklog today --repo https://github.com/user/project
 
 # 工作原理
 
-Worklog 的核心流程：
+Worklog 支持 **两条衔接的流程**：先辅助写出 commit，再基于已提交历史生成日报。
+
+**1. 生成 commit message（提交前）**
 
 ```
-Git commit + diff
+代码变更（工作区 / 暂存区）
+      ↓
+git diff（或 git diff --cached）
+      ↓
+AI 分析代码变化
+      ↓
+生成 commit message
+      ↓
+用户确认
+      ↓
+git commit
+```
+
+**2. 生成日报 / 周报（提交后）**
+
+```
+Git commit + diff（git log / git show）
       ↓
 代码变更分析
       ↓
@@ -132,6 +151,8 @@ AI 总结
       ↓
 生成日报
 ```
+
+完整链路即：**变更 → diff → AI 写 message → 确认 → commit → 再用 commit + diff 生成日报**。
 
 ---
 

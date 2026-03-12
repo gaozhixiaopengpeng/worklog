@@ -1,10 +1,11 @@
 # Worklog AI Prompt 设计
 
-本项目的核心能力是：
+本项目的核心能力包括：
 
-**将 Git Commit + Diff 自动生成工作日报。**
+1. **提交前**：根据 **diff（无 commit message）** 由 AI 生成 **commit message**，用户确认后再提交。
+2. **提交后**：将 **Git Commit + Diff** 自动生成 **工作日报 / 周报**。
 
-因此 Prompt 设计非常关键。
+因此 Prompt 设计非常关键（commit message 与日报可用不同模板：前者偏技术摘要与约定式提交，后者偏工作汇报与非技术可读）。
 
 ---
 
