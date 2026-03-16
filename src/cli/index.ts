@@ -77,8 +77,8 @@ async function runReport(
   language?: string
 ): Promise<void> {
   const commits = await getCommits(repo, since, until);
-  process.stdout.write(formatReportTitle(titleKind));
   if (commits.length === 0) {
+    process.stdout.write(formatReportTitle(titleKind, language));
     process.stdout.write('（所选时间范围内无 commit）\n');
     return;
   }
@@ -105,7 +105,9 @@ async function runReport(
     }
   }
   stopLoading();
-  process.stdout.write('\n' + report + '\n');
+  process.stdout.write('\n');
+  process.stdout.write(formatReportTitle(titleKind, language) + '\n\n');
+  process.stdout.write(report + '\n');
 }
 
 const program = new Command();
@@ -126,7 +128,7 @@ program
   .option('-r, --repo <path>', '仓库路径', process.cwd())
   .option(
     '--lang <code>',
-    '附加输出语言代码（默认仅中文，如：en 表示中文 + 英文）'
+    '输出语言代码（默认 zh 中文，如：en 表示仅英文）'
   )
   .option(
     '--provider <name>',
@@ -145,7 +147,7 @@ program
   .option('-r, --repo <path>', '仓库路径', process.cwd())
   .option(
     '--lang <code>',
-    '附加输出语言代码（默认仅中文，如：en 表示中文 + 英文）'
+    '输出语言代码（默认 zh 中文，如：en 表示仅英文）'
   )
   .option('--provider <name>', 'AI 提供方: openai（默认）| deepseek')
   .action(
@@ -167,7 +169,7 @@ program
   .option('-r, --repo <path>', '仓库路径', process.cwd())
   .option(
     '--lang <code>',
-    '附加输出语言代码（默认仅中文，如：en 表示中文 + 英文）'
+    '输出语言代码（默认 zh 中文，如：en 表示仅英文）'
   )
   .option('--provider <name>', 'AI 提供方: openai（默认）| deepseek')
   .action(async (opts: { repo: string; provider?: string; lang?: string }) => {
@@ -182,7 +184,7 @@ program
   .option('-r, --repo <path>', '仓库路径', process.cwd())
   .option(
     '--lang <code>',
-    '附加输出语言代码（默认仅中文，如：en 表示中文 + 英文）'
+    '输出语言代码（默认 zh 中文，如：en 表示仅英文）'
   )
   .option('--provider <name>', 'AI 提供方: openai（默认）| deepseek')
   .action(async (opts: { repo: string; provider?: string; lang?: string }) => {
@@ -206,16 +208,17 @@ function askLine(question: string): Promise<string> {
 
 function startLoading(message: string): () => void {
   let stopped = false;
-  process.stdout.write(message);
+  // 进度提示统一写到 stderr，避免污染 stdout 的正式输出
+  process.stderr.write(message);
   const interval = setInterval(() => {
     if (stopped) return;
-    process.stdout.write('.');
-  }, 500);
+    process.stderr.write('.');
+  }, 1000);
   return () => {
     if (stopped) return;
     stopped = true;
     clearInterval(interval);
-    process.stdout.write('\n');
+    process.stderr.write('\n');
   };
 }
 

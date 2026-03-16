@@ -1,12 +1,27 @@
 /**
  * 格式化最终输出（stdout 用）
+ * language:
+ * - 默认 zh：中文标题
+ * - 例如 en：英文标题
  */
 export function formatReportTitle(
-  kind: 'today' | 'day' | 'week' | 'month'
+  kind: 'today' | 'day' | 'week' | 'month',
+  language: string = 'zh'
 ): string {
-  if (kind === 'month') return '本月工作总结:';
-  if (kind === 'week') return '本周工作总结:';
-  return '今日工作总结:';
+  const lang = language.toLowerCase();
+  const isEn = lang === 'en';
+
+  if (kind === 'month') {
+    return isEn ? "This Month's Work Summary:" : '本月工作总结:';
+  }
+  if (kind === 'week') {
+    return isEn ? "This Week's Work Summary:" : '本周工作总结:';
+  }
+  if (kind === 'day') {
+    return isEn ? "Work Summary for Selected Day:" : '指定日期工作总结:';
+  }
+  // today
+  return isEn ? "Today's Work Summary:" : '今日工作总结:';
 }
 
 /**
