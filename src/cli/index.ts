@@ -17,19 +17,30 @@ import {
 } from '../report/generate.js';
 
 function dayRange(dateStr: string): { since: string; until: string } {
-  const d = new Date(dateStr + 'T00:00:00.000Z');
-  if (Number.isNaN(d.getTime())) {
+  const parts = dateStr.split('-').map((p) => Number(p));
+  if (parts.length !== 3 || parts.some((n) => Number.isNaN(n))) {
     throw new Error(`无效日期: ${dateStr}，请使用 YYYY-MM-DD`);
   }
-  const since = d.toISOString();
-  const until = new Date(d.getTime() + 86400000).toISOString();
+  const [year, month, day] = parts;
+  const start = new Date(year, month - 1, day, 0, 0, 0, 0);
+  if (Number.isNaN(start.getTime())) {
+    throw new Error(`无效日期: ${dateStr}，请使用 YYYY-MM-DD`);
+  }
+  const since = start.toISOString();
+  const until = new Date(start.getTime() + 86400000).toISOString();
   return { since, until };
 }
 
 function todayRange(): { since: string; until: string } {
   const now = new Date();
   const start = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    0,
+    0,
+    0,
+    0
   );
   const until = new Date(start.getTime() + 86400000).toISOString();
   return { since: start.toISOString(), until };
@@ -37,25 +48,43 @@ function todayRange(): { since: string; until: string } {
 
 function weekRange(): { since: string; until: string } {
   const now = new Date();
-  const day = now.getUTCDay();
+  const day = now.getDay();
   const diff = day === 0 ? 6 : day - 1; // 周一为一周开始
   const monday = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() - diff)
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() - diff,
+    0,
+    0,
+    0,
+    0
   );
-  const since = new Date(
-    Date.UTC(monday.getUTCFullYear(), monday.getUTCMonth(), monday.getUTCDate())
+  const since = monday.toISOString();
+  const until = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1,
+    0,
+    0,
+    0,
+    0
   ).toISOString();
-  const until = new Date(now.getTime() + 86400000).toISOString();
   return { since, until };
 }
 
 function monthRange(): { since: string; until: string } {
   const now = new Date();
-  const since = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)
-  ).toISOString();
-  const until = new Date(now.getTime() + 86400000).toISOString();
-  return { since, until };
+  const since = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0, 0);
+  const until = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1,
+    0,
+    0,
+    0,
+    0
+  );
+  return { since: since.toISOString(), until: until.toISOString() };
 }
 
 /** 展示用：去掉「建议的 commit message」标题行及与交互提示相关的条目 */
