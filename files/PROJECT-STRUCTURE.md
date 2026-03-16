@@ -34,7 +34,7 @@ worklog
 CLI 入口文件
 
 ```
-worklog today
+worklog day
 ```
 
 ---
@@ -44,7 +44,7 @@ worklog today
 命令解析
 
 ```
-worklog today
+worklog day
 worklog week
 ```
 
@@ -105,9 +105,9 @@ import "../src/cli"
 # CLI示例
 
 ```
-worklog today
+worklog day
 worklog week
-worklog today --repo ./project
+worklog day --repo ./project
 ```
 
 ---

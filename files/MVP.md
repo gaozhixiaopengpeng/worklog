@@ -122,8 +122,8 @@ diff
 示例（设计层面，MVP 中需要实现 CLI 接口与 AI Prompt 支持）：
 
 ```
-worklog today            # 仅中文
-worklog today --lang en  # 中文 + 英文
+worklog day            # 仅中文（默认今天）
+worklog day --lang en  # 中文 + 英文
 ```
 
 ---
@@ -133,7 +133,7 @@ worklog today --lang en  # 中文 + 英文
 示例：
 
 ```
-worklog today
+worklog day
 ```
 
 生成 commit message 并交互确认提交：

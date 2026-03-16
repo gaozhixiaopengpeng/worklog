@@ -123,27 +123,9 @@ function applyProvider(provider?: string): void {
 }
 
 program
-  .command('today')
-  .description('生成今日工作日报')
-  .option('-r, --repo <path>', '仓库路径', process.cwd())
-  .option(
-    '--lang <code>',
-    '输出语言代码（默认 zh 中文，如：en 表示仅英文）'
-  )
-  .option(
-    '--provider <name>',
-    'AI 提供方: openai（默认）| deepseek'
-  )
-  .action(async (opts: { repo: string; provider?: string; lang?: string }) => {
-    applyProvider(opts.provider);
-    const { since, until } = todayRange();
-    await runReport(opts.repo, since, until, 'daily', 'today', opts.lang);
-  });
-
-program
   .command('day')
-  .description('生成指定日期日报')
-  .requiredOption('-d, --date <yyyy-mm-dd>', '日期')
+  .description('生成今日或指定日期日报')
+  .option('-d, --date <yyyy-mm-dd>', '日期（留空则为今天）')
   .option('-r, --repo <path>', '仓库路径', process.cwd())
   .option(
     '--lang <code>',
@@ -152,14 +134,17 @@ program
   .option('--provider <name>', 'AI 提供方: openai（默认）| deepseek')
   .action(
     async (opts: {
-      date: string;
+      date?: string;
       repo: string;
       provider?: string;
       lang?: string;
     }) => {
       applyProvider(opts.provider);
-      const { since, until } = dayRange(opts.date);
-      await runReport(opts.repo, since, until, 'daily', 'day', opts.lang);
+      const { since, until } = opts.date
+        ? dayRange(opts.date)
+        : todayRange();
+      const titleKind = opts.date ? 'day' : 'today';
+      await runReport(opts.repo, since, until, 'daily', titleKind, opts.lang);
     }
   );
 

@@ -35,7 +35,7 @@ Node.js CLI
 负责解析命令：
 
 ```
-worklog today
+worklog day
 worklog week
 ```
 

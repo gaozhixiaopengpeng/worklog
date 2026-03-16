@@ -156,5 +156,5 @@ add token validation
 示例：
 
 ```
-worklog today --style leader
+worklog day --style leader
 ```

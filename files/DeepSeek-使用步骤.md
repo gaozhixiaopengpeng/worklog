@@ -70,13 +70,13 @@ node dist/cli/index.js <command> [options]
 ### 今日日报
 
 ```bash
-node dist/cli/index.js today --provider deepseek
+node dist/cli/index.js day --provider deepseek
 ```
 
 ### 指定仓库
 
 ```bash
-node dist/cli/index.js today --repo /path/to/your/repo --provider deepseek
+node dist/cli/index.js day --repo /path/to/your/repo --provider deepseek
 ```
 
 ### 指定日期
@@ -100,7 +100,7 @@ node dist/cli/index.js week --provider deepseek
 若通过 `npm link` 或 `npm install -g` 安装，可直接：
 
 ```bash
-worklog today --provider deepseek
+worklog day --provider deepseek
 ```
 
 （发布版 `package.json` 的 `bin` 指向 `dist/cli/index.js`，由 npm 处理入口。）

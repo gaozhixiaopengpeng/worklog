@@ -27,7 +27,7 @@ npm install -g worklog
 ```bash
 npm install
 npm run build
-node dist/cli/index.js today
+node dist/cli/index.js day
 ```
 
 > 说明：以下示例统一使用 `worklog` 命令，若你是本地开发未全局安装，可将其替换为 `node dist/cli/index.js`。
@@ -36,8 +36,7 @@ node dist/cli/index.js today
 
 ## 命令总览
 
-- **`worklog today`**：生成**今日**工作日报
-- **`worklog day`**：生成**指定日期**的日报
+- **`worklog day`**：生成**今日**或**指定日期**的日报
 - **`worklog week`**：生成**本周**工作周报
 - **`worklog month`**：生成**本月**工作月报
 - **`worklog commit`**：根据代码 diff 由 AI 生成 commit message，可选自动提交
@@ -50,48 +49,48 @@ node dist/cli/index.js today
 
 ---
 
-## 1. 今日日报：`worklog today`
+## 1. 今日日报：`worklog day`
 
 **作用**：基于「今天」在 Git 仓库中的 commit 与 diff，生成一份中文工作日报，可选附加其他语言版本。
 
 **基本用法：**
 
 ```bash
-worklog today
+worklog day
 ```
 
 **常用选项：**
 
 - `-r, --repo <path>`：指定仓库路径  
   ```bash
-  worklog today --repo /path/to/project
+  worklog day --repo /path/to/project
   ```
 
 - `--lang <code>`：指定输出语言  
   - 默认：仅生成中文日报  
   - 示例：附加英文版（仍会保证中文版本存在）  
   ```bash
-  worklog today --lang en
+  worklog day --lang en
   ```
 
 - `--provider <name>`：切换 AI 提供方  
   ```bash
-  worklog today --provider deepseek
+  worklog day --provider deepseek
   ```
 
 **典型场景：**
 
-- 每天下班前，在项目根目录执行一次 `worklog today`，直接复制输出内容到日报系统。
+- 每天下班前，在项目根目录执行一次 `worklog day`，直接复制输出内容到日报系统。
 
 ---
 
-## 2. 指定日期日报：`worklog day`
+## 2. 指定日期日报：`worklog day --date`
 
 **作用**：补生成指定日期的日报，例如忘记写某天日报时使用。
 
-**必须参数：**
+**可选参数：**
 
-- `-d, --date <yyyy-mm-dd>`：指定日期（UTC 0 点～次日 UTC 0 点的 commit）
+- `-d, --date <yyyy-mm-dd>`：指定日期（UTC 0 点～次日 UTC 0 点的 commit；留空则为今天）
 
 **示例：**
 
@@ -164,7 +163,7 @@ worklog month --repo /path/to/project --lang en
 **常见流程：**
 
 ```bash
-git add -A
+git add .
 worklog commit
 ```
 
@@ -213,7 +212,7 @@ worklog commit
 - **单次提交，自动生成说明并提交：**
 
   ```bash
-  git add -A
+  git add .
   worklog commit
   ```
 
@@ -242,7 +241,7 @@ worklog commit
 如果你在一个「非仓库」目录中，也可以通过 `--repo` 指定其他路径：
 
 ```bash
-worklog today --repo /path/to/your/git-repo
+worklog day --repo /path/to/your/git-repo
 worklog week --repo ../another-project
 ```
 
@@ -251,7 +250,7 @@ worklog week --repo ../another-project
 在支持的场景中，你也可以直接传入仓库地址（具体能力以当前实现为准）：
 
 ```bash
-worklog today --repo https://github.com/user/project
+worklog day --repo https://github.com/user/project
 ```
 
 > 提示：对于企业内网 GitLab，请确保你的网络与认证方式已按项目 `README.md` 中的说明配置完毕。
@@ -290,10 +289,10 @@ worklog today --repo https://github.com/user/project
 ## 8. 推荐使用习惯
 
 - 每次完成一小块功能：
-  1. `git add -A`
+  1. `git add .`
   2. `worklog commit`（生成并确认提交说明）
 - 每天结束前：
-  - 在项目根目录执行 `worklog today`，复制输出到你的日报系统；
+  - 在项目根目录执行 `worklog day`，复制输出到你的日报系统；
 - 每周 / 每月总结：
   - 使用 `worklog week` / `worklog month`，快速整理阶段性成果。
 

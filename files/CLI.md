@@ -13,7 +13,7 @@ worklog <command> [options]
 ## 今日日报
 
 ```
-worklog today
+worklog day
 ```
 
 ---
@@ -37,7 +37,7 @@ worklog week
 ## 指定仓库
 
 ```
-worklog today --repo ./project
+worklog day --repo ./project
 ```
 
 ---
@@ -60,7 +60,7 @@ worklog today --repo ./project
 生成今日日报
 
 ```
-worklog today
+worklog day
 ```
 
 生成周报
@@ -72,5 +72,5 @@ worklog week
 指定仓库
 
 ```
-worklog today --repo ~/code/project
+worklog day --repo ~/code/project
 ```
