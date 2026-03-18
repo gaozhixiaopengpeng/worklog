@@ -284,7 +284,7 @@ program
         if (addAnswer.toLowerCase() === 'y' || addAnswer.toLowerCase() === 'yes') {
           try {
             await git.add('.');
-            process.stdout.write('已执行 git add。\n');
+            process.stdout.write('已执行 git add -A\n');
           } catch (e) {
             const msg = e instanceof Error ? e.message : String(e);
             process.stderr.write('git add 失败: ' + msg + '\n');
