@@ -1,7 +1,7 @@
 {
   "name": "workpilot",
   "version": "0.1.0",
-  "description": "AI 自动生成 Git 工作日报的 CLI 工具",
+  "description": "AI-powered CLI for generating Git-based daily/weekly/monthly reports and commit messages.",
   "type": "module",
   "bin": {
     "workpilot": "./dist/cli/index.js"
@@ -15,11 +15,24 @@
   },
   "keywords": [
     "workpilot",
+    "work-report",
     "git",
     "daily-report",
+    "weekly-report",
+    "monthly-report",
+    "commit-message",
+    "developer-productivity",
     "cli",
     "ai"
   ],
+  "homepage": "https://github.com/gaozhixiaopengpeng/work-pilot#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gaozhixiaopengpeng/work-pilot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gaozhixiaopengpeng/work-pilot/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "axios": "^1.7.0",
