@@ -1,6 +1,6 @@
 {
   "name": "workpilot",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "AI-powered CLI for generating Git-based daily/weekly/monthly reports and commit messages.",
   "type": "module",
   "bin": {
@@ -17,13 +17,19 @@
   "keywords": [
     "workpilot",
     "wp",
+    "work-pilot",
     "work-report",
+    "daily-log",
+    "standup",
     "git",
+    "simple-git",
     "daily-report",
     "weekly-report",
     "monthly-report",
     "commit-message",
+    "changelog",
     "developer-productivity",
+    "automation",
     "cli",
     "ai"
   ],
