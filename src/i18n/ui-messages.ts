@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { resolveUiLocale } from './ui-locale.js';
+import { resolveUiLocale, type UiLocale } from './ui-locale.js';
 
 export type UiMessages = typeof import('./ui-strings.en.json');
 
@@ -22,6 +22,18 @@ export function getUiMessages(): UiMessages {
     cached = resolveUiLocale() === 'zh' ? zh : en;
   }
   return cached;
+}
+
+function normalizeLocaleFromLanguage(language?: string): UiLocale {
+  const raw = (language ?? '').trim().toLowerCase();
+  if (!raw) return resolveUiLocale();
+  if (raw === 'zh' || raw.startsWith('zh-') || raw.startsWith('zh_')) return 'zh';
+  return 'en';
+}
+
+/** 按报告语言（如 --lang）选择文案；为空时回退终端 UI 语言 */
+export function getUiMessagesForLanguage(language?: string): UiMessages {
+  return normalizeLocaleFromLanguage(language) === 'zh' ? zh : en;
 }
 
 /** 英文基线文案：用于运行时兜底，避免 key 缺失导致空输出 */

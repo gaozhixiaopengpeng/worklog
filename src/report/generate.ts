@@ -1,4 +1,8 @@
-import { getFallbackUiMessages, getUiMessages } from '../i18n/ui-messages.js';
+import {
+  getFallbackUiMessages,
+  getUiMessages,
+  getUiMessagesForLanguage,
+} from '../i18n/ui-messages.js';
 
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.length > 0;
@@ -11,9 +15,12 @@ function pickFirst(...values: unknown[]): string {
   return '';
 }
 
-/** 打印在 stdout 的报表标题行：随终端 UI 语言，与 `--lang`（模型正文）无关 */
-export function formatReportTitle(kind: 'today' | 'day' | 'week' | 'month'): string {
-  const ui = getUiMessages();
+/** 打印在 stdout 的报表标题行：优先随 `--lang`，未指定时随终端 UI 语言 */
+export function formatReportTitle(
+  kind: 'today' | 'day' | 'week' | 'month',
+  language?: string
+): string {
+  const ui = getUiMessagesForLanguage(language);
   const fallback = getFallbackUiMessages();
   const value =
     kind === 'month'
