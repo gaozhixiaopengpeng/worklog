@@ -51,12 +51,13 @@ workpilot day
 - **提交更规范：** 基于 diff、符合常见约定的 commit message
 - **纯 CLI：** 无 UI、无厂商绑定；支持本地与内网离线环境
 
-### 与 Cursor 等工具的区别
+### 与 Cursor、Claude、Trae 等工具的区别
 
 - **面向汇报，不是聊天：** 把 Git 记录整理成可分享的日/周/月报，不是通用 IDE 内助手。
 - **自带 API Key、按次计费：** 按调用付费；不必为「写工作汇报」单独绑定 IDE 订阅。
 - **与编辑器解耦：** 终端、脚本、自动化都能用，不依赖某一编辑器或托管工作区。
 - **轻量、快速、省事：** 专职 CLI，不必打开大型 IDE 或聊天客户端；一条命令即用即走，启动与反馈路径短，适合快速出日报/周报。
+- **10S完成：** 典型日报场景下，单条命令可在约 10 秒内完成生成（取决于网络与模型响应）。
 
 ---
 
@@ -71,7 +72,7 @@ npm install -g workpilot
 ### 命令名与别名：`workpilot` / `wp`
 
 - **两个命令，同一程序**：`package.json` 的 `bin` 同时提供 **`workpilot`** 与 **`wp`**，行为一致。
-- **文档里的写法**：下文示例统一使用 `workpilot`；任意处可换成 **`wp`**（例如 `wp day`、`wp commit`）。
+- **推荐写法**：下文示例优先使用 **`wp`**（例如 `wp day`、`wp commit`）。
 - **帮助信息**：`workpilot --help` / `wp --help` 中用法行会显示你实际输入的命令名。
 
 ### 2) 配置 API Key（OpenAI 与/或 DeepSeek）
@@ -101,7 +102,7 @@ export AI_PROVIDER=openai
 ### 3) 生成今日日报
 
 ```bash
-workpilot day
+wp day
 ```
 
 完成。
@@ -110,60 +111,49 @@ workpilot day
 
 ## 常用命令
 
-以下命令中的 **`workpilot`** 均可改为 **`wp`**。
-
-### 报表
-
-```bash
-workpilot day
-workpilot week
-workpilot month
-workpilot day --date 2026-03-10
-workpilot day --dingtalk
-workpilot week --dingtalk
-workpilot month --dingtalk
-workpilot day --dingding
-workpilot week --dingding
-workpilot month --dingding
-workpilot day --feishu
-workpilot week --feishu
-workpilot month --feishu
-workpilot day --wecom
-workpilot week --wecom
-workpilot month --wecom
-workpilot day --weixin
-workpilot week --weixin
-workpilot month --weixin
-```
-
-说明：
-
-- `--dingtalk` 可用于 `day` / `week` / `month`，会在生成后拉起钉钉客户端辅助发送。
-- `--dingding` 是 `--dingtalk` 的兼容别名。
-- `--wecom` 可用于 `day` / `week` / `month`，会在生成后拉起企业微信客户端辅助发送。
-- `--weixin` 是 `--wecom` 的兼容别名。
-- `--feishu` 可用于 `day` / `week` / `month`，会在生成后拉起飞书客户端辅助发送。
+以下示例统一使用 **`wp`**。
 
 ### Commit message
 
 ```bash
 git add -A
-workpilot commit
+wp commit
 ```
+
+### 报表
+
+```bash
+wp day
+wp week
+wp month
+wp day --date 2026-03-10
+wp day --dingtalk # 等同于 wp day --dingding
+wp week --feishu
+wp month --wecom # 等同于 wp month --weixin
+```
+
+说明：
+
+- `day`、`week`、`month` 为报表子命令。
+- `--dingtalk` 可用于 `day` / `week` / `month`，会在生成后拉起钉钉客户端辅助发送。
+- `dingding` 是 `dingtalk` 的兼容别名。
+- `feishu` 为飞书发送能力（支持 `wp day|week|month --feishu`）。
+- `wecom` 为企业微信发送能力（支持 `wp day|week|month --wecom`）。
+- `weixin` 是 `wecom` 的兼容别名。
 
 ### 剪贴板
 
-在命令末尾追加 **`copy`**，可在打印后将同一份正文写入系统剪贴板（例如 `workpilot week copy`、`workpilot commit --no-commit copy`）。
+在命令末尾追加 **`copy`**，可在打印后将同一份正文写入系统剪贴板（例如 `wp week copy`、`wp commit --no-commit copy`）。
 
 ```bash
-workpilot day copy
-workpilot commit copy
-workpilot week copy
-workpilot copy
-workpilot day | workpilot copy
+wp day copy
+wp commit copy
+wp week copy
+wp copy
+wp day | wp copy
 ```
 
-单独执行 **`workpilot copy`** 时读取本机缓存（`$XDG_CACHE_HOME/workpilot/last-report.txt`；未设置 `XDG_CACHE_HOME` 时一般为 `~/.cache/workpilot/last-report.txt`）。
+单独执行 **`wp copy`** 时读取本机缓存（`$XDG_CACHE_HOME/workpilot/last-report.txt`；未设置 `XDG_CACHE_HOME` 时一般为 `~/.cache/workpilot/last-report.txt`）。
 
 ---
 
@@ -219,7 +209,7 @@ workpilot day | workpilot copy
 示例：
 
 ```bash
-workpilot day --lang zh
+wp day --lang zh
 ```
 
 ---

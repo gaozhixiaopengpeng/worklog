@@ -51,12 +51,13 @@ Today's Work Summary:
 - **Better commits:** diff-based, convention-friendly messages
 - **Pure CLI:** no UI or vendor lock-in; works with local and air-gapped repos
 
-### Compared to Cursor and similar tools
+### Compared to Cursor, Claude, Trae, and similar tools
 
 - **Report-first, not chat-first:** turns Git history into standup-ready summaries; it is not a general in-editor assistant.
 - **Bring your own API key:** pay per run at API rates—no need to bundle an IDE subscription just for this workflow.
 - **Runs wherever Git runs:** terminal, scripts, or automation without tying output to a specific editor or hosted workspace.
 - **Lightweight and fast:** a focused CLI—no heavy IDE or chat app to launch; short path from command to output, ideal for quick standup-style reports.
+- **Finish in 10 seconds:** in typical daily-report scenarios, one command can complete in about 10s (depending on network and model response).
 
 ---
 
@@ -71,7 +72,7 @@ npm install -g workpilot
 ### Command names: `workpilot` / `wp`
 
 - **Same binary, two names**: `package.json` `bin` exposes **`workpilot`** and **`wp`**; behavior is identical.
-- **Docs**: examples below use `workpilot`; you can substitute **`wp`** anywhere (e.g. `wp day`, `wp commit`).
+- **Recommended style**: examples below prefer **`wp`** (e.g. `wp day`, `wp commit`).
 - **Help**: `workpilot --help` / `wp --help` shows the name you invoked in the usage line.
 
 ### 2) API keys (OpenAI and/or DeepSeek)
@@ -102,7 +103,7 @@ export AI_PROVIDER=openai
 ### 3) Today’s daily report
 
 ```bash
-workpilot day
+wp day
 ```
 
 Done.
@@ -111,60 +112,49 @@ Done.
 
 ## Common commands
 
-You may replace **`workpilot`** with **`wp`** in any command.
-
-### Reports
-
-```bash
-workpilot day
-workpilot week
-workpilot month
-workpilot day --date 2026-03-10
-workpilot day --dingtalk
-workpilot week --dingtalk
-workpilot month --dingtalk
-workpilot day --dingding
-workpilot week --dingding
-workpilot month --dingding
-workpilot day --feishu
-workpilot week --feishu
-workpilot month --feishu
-workpilot day --wecom
-workpilot week --wecom
-workpilot month --wecom
-workpilot day --weixin
-workpilot week --weixin
-workpilot month --weixin
-```
-
-Notes:
-
-- `--dingtalk` works with `day` / `week` / `month` and launches DingTalk app assist after generation.
-- `--dingding` is an alias of `--dingtalk`.
-- `--wecom` works with `day` / `week` / `month` and launches WeCom app assist after generation.
-- `--weixin` is an alias of `--wecom`.
-- `--feishu` works with `day` / `week` / `month` and launches Feishu app assist after generation.
+Examples below use **`wp`**.
 
 ### Commit messages
 
 ```bash
 git add -A
-workpilot commit
+wp commit
 ```
+
+### Reports
+
+```bash
+wp day
+wp week
+wp month
+wp day --date 2026-03-10
+wp day --dingtalk # equivalent to wp day --dingding
+wp week --feishu
+wp month --wecom # equivalent to wp month --weixin
+```
+
+Notes:
+
+- `day`, `week`, and `month` are report subcommands.
+- `--dingtalk` works with `day` / `week` / `month` and launches DingTalk app assist after generation.
+- `dingding` is an alias of `dingtalk`.
+- `feishu` is the Feishu delivery capability (use `wp day|week|month --feishu`).
+- `wecom` is the WeCom delivery capability (use `wp day|week|month --wecom`).
+- `weixin` is an alias of `wecom`.
 
 ### Clipboard helpers
 
-Append **`copy`** to write the same body to the system clipboard after printing (e.g. `workpilot week copy`, `workpilot commit --no-commit copy`).
+Append **`copy`** to write the same body to the system clipboard after printing (e.g. `wp week copy`, `wp commit --no-commit copy`).
 
 ```bash
-workpilot day copy
-workpilot commit copy
-workpilot week copy
-workpilot copy
-workpilot day | workpilot copy
+wp day copy
+wp commit copy
+wp week copy
+wp copy
+wp day | wp copy
 ```
 
-**`workpilot copy`** alone reads the local cache (`$XDG_CACHE_HOME/workpilot/last-report.txt`, or `~/.cache/workpilot/last-report.txt` when unset).
+**`wp copy`** alone reads the local cache (`$XDG_CACHE_HOME/workpilot/last-report.txt`, or `~/.cache/workpilot/last-report.txt` when unset).
 
 ---
 
@@ -220,7 +210,7 @@ Inference:
 Example:
 
 ```bash
-workpilot day --lang zh
+wp day --lang zh
 ```
 
 ---
