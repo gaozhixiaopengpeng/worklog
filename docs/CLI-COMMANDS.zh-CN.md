@@ -351,3 +351,4 @@ workpilot week --repo ../another-project
   - 使用 `workpilot week` / `workpilot month`，快速整理阶段性成果。
 
 掌握以上命令后，你已经可以在日常开发中高效地使用 workpilot 生成 commit message 和各类工作报告了。
+
