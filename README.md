@@ -2,6 +2,8 @@
 
 Stop writing daily reports manually.
 
+**Language:** This page is English. Switch to [中文](README.zh-CN.md).
+
 **workpilot** is an AI CLI that reads your **Git history and code changes** and generates:
 
 * daily work reports
@@ -129,6 +131,13 @@ Optional provider selection:
 export AI_PROVIDER=openai
 ```
 
+Provider selection logic:
+
+* If `AI_PROVIDER` is set, workpilot always uses `AI_PROVIDER`.
+* If `AI_PROVIDER` is not set, workpilot picks the first available key in this order:
+  1. `DEEPSEEK_API_KEY`
+  2. `OPEN_AI_API_KEY`
+
 To persist across terminals, add these lines to your shell config:
 
 * bash → `~/.bashrc`
@@ -156,12 +165,20 @@ Generate work summaries from Git history.
 wp day
 wp week
 wp month
+wp day --lang zh
 ```
 
 Specify date:
 
 ```bash
 wp day --date 2026-03-10
+```
+
+Control output language:
+
+```bash
+wp day --lang zh
+wp week --lang en
 ```
 
 ---
@@ -205,16 +222,19 @@ wp copy
 Workpilot can open common collaboration tools after generating reports.
 
 ```bash
-wp day --dingtalk
+wp day --dingtalk # wp day --dingding
 wp week --feishu
-wp month --wecom
+wp month --wecom # wp month --weixin
 ```
+
+> `--dingtalk` opens DingTalk after report generation. `--dingding` is an alias of `--dingtalk`.
+> `--wecom` opens WeCom after report generation. `--weixin` is an alias of `--wecom`.
 
 Supported integrations:
 
-* DingTalk
-* Feishu
-* WeCom
+- DingTalk
+- Feishu
+- WeCom
 
 The report content is also copied to clipboard for quick paste.
 
@@ -242,7 +262,7 @@ Very low.
 
 Typical usage:
 
-* ~100 daily reports often cost **well under $0.20**
+* ~100 daily reports often cost **well under $0.10**
 * depends on model and token usage
 
 You only pay the API provider.
@@ -263,6 +283,13 @@ Optional environment variables.
 | OPEN_AI_BASE     | OpenAI-compatible base URL |
 | DEEPSEEK_API_KEY | DeepSeek API key           |
 | DEEPSEEK_MODEL   | DeepSeek model             |
+
+Selection priority:
+
+* `AI_PROVIDER` (if set) overrides auto selection.
+* If `AI_PROVIDER` is not set, the first available key is used:
+  1. `DEEPSEEK_API_KEY`
+  2. `OPEN_AI_API_KEY`
 
 ---
 
