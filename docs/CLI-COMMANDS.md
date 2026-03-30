@@ -1,5 +1,7 @@
 ## workpilot CLI Command Reference (Beginner-friendly)
 
+**Language:** This page is English. Switch to [中文](CLI-COMMANDS.zh-CN.md).
+
 This document is for users who are using workpilot for the first time. It helps you quickly get started with the most common commands.
 
 The command name `workpilot` is equivalent to the short name `wp` (after global installation they both work). In the examples below, we consistently use `workpilot`; you can replace it with `wp` if you prefer.

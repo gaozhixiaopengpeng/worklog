@@ -1,5 +1,7 @@
 ## workpilot CLI 命令说明（新手版）
 
+**语言：**本页为中文。切换到 [English](CLI-COMMANDS.md)。
+
 本文档面向 **第一次使用 workpilot** 的用户，帮助你快速上手常用命令。
 
 命令名 **`workpilot`** 与短名 **`wp`** 等价（全局安装后均可使用）；下文示例统一写 `workpilot`，你可全部换成 `wp`。
